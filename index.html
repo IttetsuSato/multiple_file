@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multiple file upload</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <form method="post" action="insert.php" enctype="multipart/form-data">
@@ -16,28 +17,59 @@
         required
         multiple
       />
-      <button type="submit">送信する</button>
+      <button id="submit_button" type="submit">送信する</button>
     </form>
 
-    <!-- 👇ここにプレビュー画像を追加する -->
     <div id="preview"></div>
 
     <!-- javascript -->
     <!-- <script src="./functions/handleFileSelect.js"></script> -->
     <script>
+      /**
+       * アップロード待ちファイルの配列
+       */
       let preUploadFiles = [];
 
+      const previewFiles = (files) => {
+        const preview = document.getElementById("preview");
+        preview.innerHTML = ""; //一旦プレビュー画像リフレッシュ
+        files.forEach((file) => {
+          const reader = new FileReader();
+
+          // URLとして読み込まれたときに実行
+          reader.onload = function (e) {
+            const imageUrl = e.target.result; // URLはevent.target.resultで呼び出せる
+            const img = document.createElement("img"); // img要素を作成
+            img.classList.add("preview-image");
+            img.src = imageUrl; // URLをimg要素にセット
+            preview.appendChild(img); // #previewの中に追加
+          };
+
+          // いざファイルをURLとして読み込む
+          reader.readAsDataURL(file);
+        });
+      };
+
+      // ファイルインプット時、①アップロード待ち配列に入れて②それらをプレビュー表示
       const fileInput = document.getElementById("file_input");
       const handleFileSelect = () => {
         const files = fileInput.files;
+        console.log("今インプットされたファイル: ", files);
         for (let i = 0; i < files.length; i++) {
           preUploadFiles.push(files[i]); //新しくアップロードされた画像をアップロード待ちの配列にpush
-          const set = new Set(preUploadFiles); // 値が一意なオブジェクトであるSetに変換
-          preUploadFiles = Array.from(set); // Setから配列に戻す
         }
-        console.log(preUploadFiles);
+        previewFiles(preUploadFiles);
       };
       fileInput.addEventListener("change", handleFileSelect);
+
+      //フォーム送信時、画像をアップロード待ち画像に置き換えてから送信
+      const form = document.forms[0];
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(form.elements["img[]"].value);
+
+        form.submit();
+      });
     </script>
   </body>
 </html>
