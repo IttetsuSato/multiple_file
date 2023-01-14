@@ -22,8 +22,6 @@
 
     <div id="preview"></div>
 
-    <!-- javascript -->
-    <!-- <script src="./functions/handleFileSelect.js"></script> -->
     <script>
       /**
        * アップロード待ちファイルの配列
@@ -66,8 +64,15 @@
       const form = document.forms[0];
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        console.log(form.elements["img[]"].value);
-
+        /**
+         * アップロード待ち配列を、FileList型に変換する
+         * @see https://qiita.com/jkr_2255/items/1c30f7afefe6959506d2
+         */
+        const dt = new DataTransfer(); 
+        preUploadFiles.forEach((file) => {
+          dt.items.add(file);
+        })
+        fileInput.files = dt.files;
         form.submit();
       });
     </script>
