@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multiple file upload</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiple file upload</title>
+  </head>
+  <body>
+    <form method="post" enctype="multipart/form-data" accept="image/*" required>
+      <input type="file" id="file_input" name="avatar" multiple />
+      <button type="submit">送信する</button>
+    </form>
+
+    <!-- 👇ここにプレビュー画像を追加する -->
+    <div id="preview"></div>
+
+    <!-- javascript -->
+    <script src="./functions/handleFileSelect.js"></script>
+  </body>
 </html>
