@@ -7,8 +7,15 @@
     <title>Multiple file upload</title>
   </head>
   <body>
-    <form method="post" enctype="multipart/form-data" accept="image/*" required>
-      <input type="file" id="file_input" name="avatar" multiple />
+    <form method="post" action="insert.php" enctype="multipart/form-data">
+      <input
+        type="file"
+        name="img[]"
+        id="file_input"
+        accept="image/*"
+        required
+        multiple
+      />
       <button type="submit">送信する</button>
     </form>
 
@@ -16,6 +23,21 @@
     <div id="preview"></div>
 
     <!-- javascript -->
-    <script src="./functions/handleFileSelect.js"></script>
+    <!-- <script src="./functions/handleFileSelect.js"></script> -->
+    <script>
+      let preUploadFiles = [];
+
+      const fileInput = document.getElementById("file_input");
+      const handleFileSelect = () => {
+        const files = fileInput.files;
+        for (let i = 0; i < files.length; i++) {
+          preUploadFiles.push(files[i]); //新しくアップロードされた画像をアップロード待ちの配列にpush
+          const set = new Set(preUploadFiles); // 値が一意なオブジェクトであるSetに変換
+          preUploadFiles = Array.from(set); // Setから配列に戻す
+        }
+        console.log(preUploadFiles);
+      };
+      fileInput.addEventListener("change", handleFileSelect);
+    </script>
   </body>
 </html>
