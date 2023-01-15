@@ -1,6 +1,26 @@
-#preview {
+.image_area_wrapper1 {
+  display: flex;
+  width: 100%;
+}
+.image_area_wrapper1 .image_area1 {
+  width: 60%;
+}
+.image_area_wrapper1 .image_area1 img {
+  width: 100%;
+}
+.image_area_wrapper1 .image_area2 {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+.image_area_wrapper1 .image_area2 img {
+  width: 100%;
+}
+
+.image_area_wrapper2 {
+  width: 100%;
   display: flex;
 }
-.preview-image {
+.image_area_wrapper2 img {
   width: 200px;
-}
+}/*# sourceMappingURL=style.css.map */

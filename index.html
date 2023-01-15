@@ -20,17 +20,30 @@
       <button id="submit_button" type="submit">送信する</button>
     </form>
 
-    <div id="preview"></div>
+    <div style="display: flex; flex-direction: column">
+      <div class="image_area_wrapper1">
+        <div class="image_area1"></div>
+        <div class="image_area2"></div>
+      </div>
+      <div class="image_area_wrapper2">
+        <div class="image_area3"></div>
+      </div>
+    </div>
 
     <script>
       /**
        * アップロード待ちファイルの配列
        */
       let preUploadFiles = [];
+      const imageArea1 = document.querySelector(".image_area1");
+      const imageArea2 = document.querySelector(".image_area2");
+      const imageArea3 = document.querySelector(".image_area3");
 
       const previewFiles = (files) => {
-        const preview = document.getElementById("preview");
-        preview.innerHTML = ""; //一旦プレビュー画像リフレッシュ
+        //一旦プレビュー画像リフレッシュ
+        imageArea1.innerHTML = "";
+        imageArea2.innerHTML = "";
+        imageArea3.innerHTML = "";
         files.forEach((file, i) => {
           const reader = new FileReader();
 
@@ -41,7 +54,13 @@
             img.classList.add("preview-image");
             img.style.order = i;
             img.src = imageUrl; // URLをimg要素にセット
-            preview.appendChild(img); // #previewの中に追加
+            if (i === 0) {
+              imageArea1.appendChild(img);
+            } else if (i === 1 || i === 2) {
+              imageArea2.appendChild(img);
+            } else {
+              imageArea3.appendChild(img);
+            }
           };
 
           // いざファイルをURLとして読み込む
@@ -69,10 +88,10 @@
          * アップロード待ち配列を、FileList型に変換する
          * @see https://qiita.com/jkr_2255/items/1c30f7afefe6959506d2
          */
-        const dt = new DataTransfer(); 
+        const dt = new DataTransfer();
         preUploadFiles.forEach((file) => {
           dt.items.add(file);
-        })
+        });
         fileInput.files = dt.files;
         form.submit();
       });
