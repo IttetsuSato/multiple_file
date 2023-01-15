@@ -31,7 +31,7 @@
       const previewFiles = (files) => {
         const preview = document.getElementById("preview");
         preview.innerHTML = ""; //一旦プレビュー画像リフレッシュ
-        files.forEach((file) => {
+        files.forEach((file, i) => {
           const reader = new FileReader();
 
           // URLとして読み込まれたときに実行
@@ -39,6 +39,7 @@
             const imageUrl = e.target.result; // URLはevent.target.resultで呼び出せる
             const img = document.createElement("img"); // img要素を作成
             img.classList.add("preview-image");
+            img.style.order = i;
             img.src = imageUrl; // URLをimg要素にセット
             preview.appendChild(img); // #previewの中に追加
           };

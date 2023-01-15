@@ -1,3 +1,6 @@
+#preview {
+  display: flex;
+}
 .preview-image {
   width: 200px;
 }
